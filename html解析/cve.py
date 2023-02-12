@@ -34,15 +34,14 @@ def savaData(results):
 
 
 def getInfo(data):
-    soup = BeautifulSoup(data, 'lxml')
-    result = []
-    # for i in range(8,154,2):            # 2021年
-    for i in range(8, 296, 2):  # 包括2020年
-        name = soup.find_all('td')[i].text
-        description = soup.find_all('td')[i + 1].text
-        dict = {'description': description, 'name': name}
-        result.append(dict)
-    return result
+    soup = BeautifulSoup(data, 'lxml')      # 使用BeautifulSoup解析获取到的数据
+    result = []     # 创建字典列表
+    for i in range(8, 296, 2):
+        name = soup.find_all('td')[i].text      # 获取name
+        description = soup.find_all('td')[i + 1].text       # 获取description
+        dict = {'description': description, 'name': name}       # 创建字典，并将description和name插入字典
+        result.append(dict)     # 将字典插入列表
+    return result       # 输出字典列表
 
 
 def main():
