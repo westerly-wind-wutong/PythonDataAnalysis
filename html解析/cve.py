@@ -34,14 +34,21 @@ def savaData(results):
 
 
 def getInfo(data):
-    soup = BeautifulSoup(data, 'lxml')      # 使用BeautifulSoup解析获取到的数据
-    result = []     # 创建字典列表
-    for i in range(8, 296, 2):
-        name = soup.find_all('td')[i].text      # 获取name
-        description = soup.find_all('td')[i + 1].text       # 获取description
-        dict = {'description': description, 'name': name}       # 创建字典，并将description和name插入字典
-        result.append(dict)     # 将字典插入列表
-    return result       # 输出字典列表
+    soup = BeautifulSoup(data, 'lxml')  # 使用BeautifulSoup解析获取到的数据
+    result = []  # 创建字典列表
+
+    # for i in range(8, 296, 2):
+    #     name = soup.find_all('td')[i].text      # 获取name
+    #     description = soup.find_all('td')[i + 1].text       # 获取description
+    #     dict = {'description': description, 'name': name}       # 创建字典，并将description和name插入字典
+    #     result.append(dict)  # 将字典插入列表
+
+    for tr in soup.select('#TableWithRules tr')[1:]:    # 循环所有div'#TableWithRules tr'
+        if int(tr.select('td')[0].text.split('-')[1]) >= 2020:  # 对编号切片，并判断为2020年后
+            # 创建字典并将description和name插入字典
+            dict = {'description': tr.select('td')[1].text, 'name': tr.select('td')[0].text}
+            result.append(dict)  # 将字典插入列表
+    return result  # 输出字典列表
 
 
 def main():
